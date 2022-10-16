@@ -1,0 +1,26 @@
+.content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.content > canvas {
+    background-color: #0cadcf;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    font-size: 8em;
+    color: #fff;
+    font-family: "Open Sans", Arial, sans-serif;
+}
