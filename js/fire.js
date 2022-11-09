@@ -11,7 +11,7 @@ let sparklerArray = [];
 let RUNNING = false;
 
 
-let smokeSize = function (t) {return t > 50 ? 50 : 5 + 45 * t/50;}
+let smokeSize = function (t) {return t > 120 ? 120 : 5 + 115 * t/120;}
 let smokeColor= function (t) {return colorfade([0, 160, 160, 0.5], [69, 69, 69, 0.5], t, 65);}
 let sparkSize = function (t) {return t > 40 ? 0 : 3 - 3 * t/40;}
 let sparkColor= function (t) {return colorfade([255, 255, 255, 1], [0, 255, 255, 1], t, 30);}
@@ -67,7 +67,7 @@ class Particle {
     draw() {
         this.ctx.fillStyle = typeof this.fillStyle == "function" ? this.fillStyle(this.timeAlive) : this.fillStyle;
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, this.currentSize, this.arc[0], this.arc[1]);
+        this.ctx.arc(Math.round(this.x), Math.round(this.y), this.currentSize, this.arc[0], this.arc[1]);
         this.ctx.closePath();
         this.ctx.fill();
     }
@@ -115,7 +115,7 @@ class Sparkler {
                         vy = Math.random() * -50;
                         particleArray.push(new Particle(
                             this.x, this.y, vx, vy, generalctx, sparkSize,
-                            20, sparkColor, 200, [0, 2*Math.PI]
+                            20, sparkColor, 40, [0, 2*Math.PI]
                         ));
                         break;
                     case 3:
@@ -123,7 +123,7 @@ class Sparkler {
                         vy = Math.random() * -50;
                         particleArray.push(new Particle(
                             this.x, this.y, vx, vy, generalctx, Math.round(Math.random()*3+2),
-                            20, sparkColor, 200, [0, 2*Math.PI]
+                            20, sparkColor, 160, [0, 2*Math.PI]
                         ));
                         break;
                     case 4:
@@ -131,7 +131,7 @@ class Sparkler {
                         vy = -5;
                         particleArray.push(new Particle(
                             this.x, this.y, vx, vy, generalctx, flameSize,
-                            -1, flameColor, 200, [0, Math.PI*2]
+                            -1, flameColor, 60, [0, Math.PI*2]
                         ));
                         break;
                 }
@@ -173,7 +173,7 @@ function animate() {
             sparklerArray[i].changePos(width/2, height/2);
         }
     }
-    smokectx.fillStyle = "rgba(48, 48, 48, 0.1)"
+    smokectx.fillStyle = "rgba(48, 48, 48, 0.1)";
     smokectx.fillRect(0, 0, smokeCanvas.width, smokeCanvas.height);
     generalctx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
     for (let i = 0; i < sparklerArray.length; i++) {
@@ -202,6 +202,7 @@ function go() {
     setTimeout(start2, 3000);
     setTimeout(start3, 500);
     setTimeout(start4, 0);
+    setTimeout(die, 600000);
 }
 
 function start1() {
@@ -227,4 +228,9 @@ function start4() {
     let height = window.innerHeight;
     let width = window.innerWidth;
     sparklerArray.push(new Sparkler(width/2, height/2, 4));
+}
+
+function die() {
+    sparklerArray.splice(0, sparklerArray.length);
+    RUNNING = false;
 }
