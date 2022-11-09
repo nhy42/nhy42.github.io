@@ -1,9 +1,19 @@
-.content > #smokeCanvas {
-    background-color: #000;
+.content > canvas {
     position: absolute;
     left: 0;
     top: 0;
     z-index: -1;
     height: 100%;
     width: 100%;
+}
+
+#smokeCanvas, body {
+    background-color: rgb(41, 41, 41);
+}
+
+.flareIMG {
+    position: absolute;
+    left: calc(50% - 15px);
+    width: 30px;
+    top: calc(50% - 5px);
 }
