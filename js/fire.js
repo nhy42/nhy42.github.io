@@ -5,8 +5,8 @@ const generalctx = generalCanvas.getContext("2d");
 let particleArray = [];
 let sparklerArray = [];
 let RUNNING = false;
-let dieTimeout;
-let colorPack = {  // [main], [smoke], [flame], "imageURL"
+let dieTimeout, startTimeout = [];
+const colorPack = {  // [main], [smoke], [flame], "imageURL"
     "cyan":   [[0, 255, 255, 1], [0, 160, 160, 0.5], [0, 100, 100, 0], "../img/flare.png"],
     "pink":   [[255, 0, 255, 1], [160, 0, 160, 0.5], [100, 0, 100, 0], "../img/flarePink.png"],
     "yellow": [[255, 255, 0, 1], [160, 160, 0, 0.5], [100, 100, 0, 0], "../img/flareYellow.png"],
@@ -167,6 +167,12 @@ function colorfade(start, end, t, tmax) {
     return("rgba("+newColor[0]+","+newColor[1]+","+newColor[2]+","+newColor[3]+")");
 }
 
+function htmlChangeColor(element) {
+    if (Object.keys(colorPack).includes(element.elements["color"].value)) {
+        changeColor(element.elements["color"].value);
+    }
+}
+
 function changeColor(colorName) {
     if (RUNNING) {
         die();
@@ -219,13 +225,13 @@ function go() {
         return;
     }
     RUNNING = true;
-    setTimeout(start1, 4000);
-    setTimeout(start1, 4000);
-    setTimeout(start1, 4000);
-    setTimeout(start1, 3200);
-    setTimeout(start2, 3000);
-    setTimeout(start3, 500);
-    setTimeout(start4, 0);
+    startTimeout.push(setTimeout(start1, 4000));
+    startTimeout.push(setTimeout(start1, 4000));
+    startTimeout.push(setTimeout(start1, 4000));
+    startTimeout.push(setTimeout(start1, 3200));
+    startTimeout.push(setTimeout(start2, 3000));
+    startTimeout.push(setTimeout(start3, 500));
+    startTimeout.push(setTimeout(start4, 0));
     dieTimeout = setTimeout(die, 600000);
 }
 
@@ -255,6 +261,10 @@ function start4() {
 }
 
 function die() {
+    for (let i = startTimeout.length - 1; i >=0; i--) {
+        clearTimeout(startTimeout[i]);
+        startTimeout.splice(i, 1);
+    }
     sparklerArray.splice(0, sparklerArray.length);
     RUNNING = false;
     clearInterval(dieTimeout);

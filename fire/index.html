@@ -12,6 +12,27 @@
     <canvas id="smokeCanvas"></canvas>
     <canvas id="generalCanvas"></canvas>
     <img id="flareIMG" src="../img/flare.png" alt="flare" onclick="go();">
+    <form class="colorSelector" action="#" onchange="htmlChangeColor(this)">
+        <label class="colorRadio cyan">
+            <input type="radio" name="color" value="cyan" checked>
+        </label>
+        <label class="colorRadio pink">
+            <input type="radio" name="color" value="pink">
+        </label>
+        <label class="colorRadio red">
+            <input type="radio" name="color" value="red">
+        </label>
+        <label class="colorRadio yellow">
+            <input type="radio" name="color" value="yellow">
+        </label>
+        <label class="colorRadio green">
+            <input type="radio" name="color" value="green">
+        </label>
+        <label class="colorRadio blue">
+            <input type="radio" name="color" value="blue">
+        </label>
+    </form>
+    <!---->
 </div>
 <script src="../js/fire.js"></script>
 <script>animate();</script>
