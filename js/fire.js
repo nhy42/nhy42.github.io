@@ -1,20 +1,27 @@
 const smokeCanvas = document.getElementById("smokeCanvas");
-const smokectx = smokeCanvas.getContext("2d");/*
-smokeCanvas.height = window.innerHeight;
-smokeCanvas.width = window.innerWidth;*/
+const smokectx = smokeCanvas.getContext("2d");
 const generalCanvas = document.getElementById("generalCanvas");
-const generalctx = generalCanvas.getContext("2d");/*
-generalCanvas.height = window.innerHeight;
-generalCanvas.width = window.innerWidth;*/
+const generalctx = generalCanvas.getContext("2d");
 let particleArray = [];
 let sparklerArray = [];
 let RUNNING = false;
+let dieTimeout;
+let colorPack = {  // [main], [smoke], [flame], "imageURL"
+    "cyan":   [[0, 255, 255, 1], [0, 160, 160, 0.5], [0, 100, 100, 0], "../img/flare.png"],
+    "pink":   [[255, 0, 255, 1], [160, 0, 160, 0.5], [100, 0, 100, 0], "../img/flarePink.png"],
+    "yellow": [[255, 255, 0, 1], [160, 160, 0, 0.5], [100, 100, 0, 0], "../img/flareYellow.png"],
+    "red":    [[255, 0, 0, 1], [160, 0, 0, 0.5], [100, 0, 0, 0], "../img/flareRed.png"],
+    "green":  [[0, 255, 0, 1], [0, 160, 0, 0.5], [0, 100, 0, 0], "../img/flareGreen.png"],
+    "blue":   [[0, 0, 255, 1], [0, 0, 160, 0.5], [0, 0, 100, 0], "../img/flareBlue.png"]
+};
+let currentColor = "cyan", newColor;
+
 
 
 let smokeSize = function (t) {return t > 120 ? 120 : 5 + 115 * t/120;}
-let smokeColor= function (t) {return colorfade([0, 160, 160, 0.5], [69, 69, 69, 0.5], t, 65);}
+let smokeColor= function (t) {return colorfade(colorPack[currentColor][1], [69, 69, 69, 0.5], t, 65);}
 let sparkSize = function (t) {return t > 40 ? 0 : 3 - 3 * t/40;}
-let sparkColor= function (t) {return colorfade([255, 255, 255, 1], [0, 255, 255, 1], t, 30);}
+let sparkColor= function (t) {return colorfade([255, 255, 255, 1], colorPack[currentColor][0], t, 30);}
 let flameSize = function (t) {
     let size = 0;
     if (t < 20) {
@@ -27,9 +34,9 @@ let flameSize = function (t) {
 let flameColor= function (t) {
     let tColor;
     if (t < 20) {
-        tColor = colorfade([255, 255, 255, 0.7], [0, 255, 255, 1], t, 20);
+        tColor = colorfade([255, 255, 255, 0.7], colorPack[currentColor][0], t, 20);
     } else {
-        tColor = colorfade([0, 255, 255, 1], [0, 100, 100, 0], t - 20, 40);  // here 40 = 60
+        tColor = colorfade(colorPack[currentColor][0], colorPack[currentColor][2], t - 20, 40);  // here 40 = 60
     }
     return tColor;
 }
@@ -160,6 +167,23 @@ function colorfade(start, end, t, tmax) {
     return("rgba("+newColor[0]+","+newColor[1]+","+newColor[2]+","+newColor[3]+")");
 }
 
+function changeColor(colorName) {
+    if (RUNNING) {
+        die();
+        newColor = colorName;
+        setTimeout(applyColorChange, 1000);
+    } else {
+        currentColor = colorName;
+        document.getElementById("flareIMG").src = colorPack[currentColor][3];
+    }
+}
+
+function applyColorChange() {
+    currentColor = newColor;
+    document.getElementById("flareIMG").src = colorPack[currentColor][3];
+    go();
+}
+
 function animate() {
     if (smokeCanvas.height !== window.innerHeight || smokeCanvas.width !== window.innerWidth) {
         particleArray.splice(0, particleArray.length);
@@ -202,7 +226,7 @@ function go() {
     setTimeout(start2, 3000);
     setTimeout(start3, 500);
     setTimeout(start4, 0);
-    setTimeout(die, 600000);
+    dieTimeout = setTimeout(die, 600000);
 }
 
 function start1() {
@@ -233,4 +257,5 @@ function start4() {
 function die() {
     sparklerArray.splice(0, sparklerArray.length);
     RUNNING = false;
+    clearInterval(dieTimeout);
 }

@@ -11,9 +11,19 @@
     background-color: rgb(41, 41, 41);
 }
 
-.flareIMG {
+#flareIMG {
     position: absolute;
     left: calc(50% - 15px);
     width: 30px;
     top: calc(50% - 5px);
+    transition-duration: 1s;
+}
+
+input[type="radio"] {
+    border: none;
+    background-color: black;
+}
+
+input[value="cyan"] {
+    background: #0ff;
 }
