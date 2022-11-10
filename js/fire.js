@@ -9,6 +9,7 @@ let dieTimeout, startTimeout = [];
 const colorPack = {  // [main], [smoke], [flame], "imageURL"
     "cyan":   [[0, 255, 255, 1], [0, 160, 160, 0.5], [0, 100, 100, 0], "../img/flare.png"],
     "pink":   [[255, 0, 255, 1], [160, 0, 160, 0.5], [100, 0, 100, 0], "../img/flarePink.png"],
+    "orange":   [[255, 142, 0, 1], [160, 88, 0, 0.5], [100, 56, 0, 0], "../img/flareOrange.png"],
     "yellow": [[255, 255, 0, 1], [160, 160, 0, 0.5], [100, 100, 0, 0], "../img/flareYellow.png"],
     "red":    [[255, 0, 0, 1], [160, 0, 0, 0.5], [100, 0, 0, 0], "../img/flareRed.png"],
     "green":  [[0, 255, 0, 1], [0, 160, 0, 0.5], [0, 100, 0, 0], "../img/flareGreen.png"],

@@ -59,6 +59,9 @@ input[type=radio]{
 .red {
     background: #bc0000;
 }
+.orange {
+    background: #ff8e00;
+}
 .yellow {
     background: #bcbc00;
 }
