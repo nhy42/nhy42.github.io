@@ -37,15 +37,9 @@
     align-items: center;
 }
 
-.colorRadio input:checked{
-    border: solid 2px white;
-    border-radius: 50%;
-}
-
 input[type=radio]{
     appearance: none;
     margin: 0;
-    padding: 0.3vmin;
     height: 100%;
     width: 100%;
 }

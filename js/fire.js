@@ -226,14 +226,14 @@ function go() {
         return;
     }
     RUNNING = true;
-    startTimeout.push(setTimeout(start1, 4000));
-    startTimeout.push(setTimeout(start1, 4000));
-    startTimeout.push(setTimeout(start1, 4000));
-    startTimeout.push(setTimeout(start1, 3200));
-    startTimeout.push(setTimeout(start2, 3000));
-    startTimeout.push(setTimeout(start3, 500));
-    startTimeout.push(setTimeout(start4, 0));
-    dieTimeout = setTimeout(die, 600000);
+    startTimeout.push(setTimeout(start1, 4500));
+    startTimeout.push(setTimeout(start1, 4500));
+    startTimeout.push(setTimeout(start1, 4500));
+    startTimeout.push(setTimeout(start1, 3700));
+    startTimeout.push(setTimeout(start2, 3500));
+    startTimeout.push(setTimeout(start3, 1000));
+    startTimeout.push(setTimeout(start4, 500));
+    dieTimeout = setTimeout(die, 600500);
 }
 
 function start1() {
