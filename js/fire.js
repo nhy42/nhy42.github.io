@@ -15,6 +15,7 @@ const colorPack = {  // [main], [smoke], [flame], "imageURL"
     "yellow": [[255, 255, 0, 1], [160, 160, 0, 0.5], [100, 100, 0, 0], "../img/flareYellow.png"],
     "red":    [[255, 0, 0, 1], [160, 0, 0, 0.5], [100, 0, 0, 0], "../img/flareRed.png"],
     "green":  [[0, 255, 0, 1], [0, 160, 0, 0.5], [0, 100, 0, 0], "../img/flareGreen.png"],
+    "white":  [[200, 200, 200, 1], [160, 160, 160, 0.5], [100, 100, 100, 0], "../img/flareWhite.png"],
     "blue":   [[0, 0, 255, 1], [0, 0, 160, 0.5], [0, 0, 100, 0], "../img/flareBlue.png"]
 };
 let currentColor = "cyan", newColor;
@@ -36,7 +37,7 @@ let flameSize = function (t) {
 };
 let flameColor= function (t) {
     let tColor;
-    if (t < 20) {
+    if (t <= 20) {
         tColor = colorfade([255, 255, 255, 0.7], colorPack[currentColor][0], t, 20);
     } else {
         tColor = colorfade(colorPack[currentColor][0], colorPack[currentColor][2], t - 20, 40);  // here 40 = 60

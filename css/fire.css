@@ -53,6 +53,9 @@ input[type=radio]{
     width: 100%;
 }
 
+.white {
+    background: #d4d4d4;
+}
 .cyan {
     background: #00bcbc;
 }
