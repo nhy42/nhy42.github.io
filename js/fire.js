@@ -4,7 +4,7 @@ const generalCanvas = document.getElementById("generalCanvas");
 const generalctx = generalCanvas.getContext("2d");
 let particleArray = [];
 let sparklerArray = [];
-let RUNNING = false;
+let RUNNING = false, STOPANIMATION = false;
 let dieTimeout, startTimeout = [];
 const colorPack = {  // [main], [smoke], [flame], "imageURL"
     "cyan":   [[0, 255, 255, 1], [0, 160, 160, 0.5], [0, 100, 100, 0], "../img/flare.png"],
@@ -16,8 +16,7 @@ const colorPack = {  // [main], [smoke], [flame], "imageURL"
     "blue":   [[0, 0, 255, 1], [0, 0, 160, 0.5], [0, 0, 100, 0], "../img/flareBlue.png"]
 };
 let currentColor = "cyan", newColor;
-let maxFPS = 60, fpsInterval = 1000 / maxFPS, startTime, now, then = 0, elapsed;
-
+let maxFPS = 60, fpsInterval = 1000 / maxFPS, now, then = 0, elapsed;
 
 
 let smokeSize = function (t) {return t > 120 ? 120 : 5 + 115 * t/120;};
@@ -182,6 +181,7 @@ function changeColor(colorName) {
         newColor = colorName;
         setTimeout(applyColorChange, 1000);
     } else {
+        newColor = colorName;
         currentColor = colorName;
         document.getElementById("flareIMG").src = colorPack[currentColor][3];
     }
@@ -204,6 +204,9 @@ function fpsLimit() {
 }
 
 function animate() {
+    if (STOPANIMATION) {
+        return;
+    }
     if (!fpsLimit()) {
         requestAnimationFrame(animate);
         return;
