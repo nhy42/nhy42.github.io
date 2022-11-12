@@ -19,10 +19,10 @@ let currentColor = "cyan", newColor;
 
 
 
-let smokeSize = function (t) {return t > 120 ? 120 : 5 + 115 * t/120;}
-let smokeColor= function (t) {return colorfade(colorPack[currentColor][1], [69, 69, 69, 0.5], t, 65);}
-let sparkSize = function (t) {return t > 40 ? 0 : 3 - 3 * t/40;}
-let sparkColor= function (t) {return colorfade([255, 255, 255, 1], colorPack[currentColor][0], t, 30);}
+let smokeSize = function (t) {return t > 120 ? 120 : 5 + 115 * t/120;};
+let smokeColor= function (t) {return colorfade(colorPack[currentColor][1], [69, 69, 69, 0.5], t, 65);};
+let sparkSize = function (t) {return t > 40 ? 0 : 3 - 3 * t/40;};
+let sparkColor= function (t) {return colorfade([255, 255, 255, 1], colorPack[currentColor][0], t, 30);};
 let flameSize = function (t) {
     let size = 0;
     if (t < 20) {
@@ -31,7 +31,7 @@ let flameSize = function (t) {
         size = 20 - 20*((t-20)/40)
     }
     return size;
-}
+};
 let flameColor= function (t) {
     let tColor;
     if (t < 20) {
@@ -40,8 +40,8 @@ let flameColor= function (t) {
         tColor = colorfade(colorPack[currentColor][0], colorPack[currentColor][2], t - 20, 40);  // here 40 = 60
     }
     return tColor;
-}
 
+};
 
 class Particle {
     constructor(x, y, vx, vy, ctx, size, grav, color, maxLife, arc) {
@@ -82,10 +82,11 @@ class Particle {
 }
 
 class Sparkler {
-    constructor(x, y, type) {
+    constructor(x, y, type, centered=true) {
         this.x = x;
         this.y = y;
         this.type = type;
+        this.centered = centered;
         switch (type) {
             case 1:
                 this.randThreshold = 0.4;
@@ -201,16 +202,18 @@ function animate() {
         generalCanvas.height = height;
         generalCanvas.width = width;
         for (let i = 0; i < sparklerArray.length; i++) {
-            sparklerArray[i].changePos(width/2, height/2);
+            if (sparklerArray[i].centered) {
+                sparklerArray[i].changePos(width/2, height/2);
+            }
         }
     }
     smokectx.fillStyle = "rgba(48, 48, 48, 0.1)";
     smokectx.fillRect(0, 0, smokeCanvas.width, smokeCanvas.height);
-    generalctx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+    generalctx.clearRect(0, 0, generalCanvas.width, generalCanvas.height);
     for (let i = 0; i < sparklerArray.length; i++) {
         sparklerArray[i].sparkle();
     }
-    for (let i = 0; i < particleArray.length; i++) {  // let i = particleArray.length - 1; i >= 0; i--
+    for (let i = 0; i < particleArray.length; i++) {
         if (particleArray[i].update()) {
             particleArray[i].draw();
         } else {
