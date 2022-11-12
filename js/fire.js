@@ -1,5 +1,7 @@
 const smokeCanvas = document.getElementById("smokeCanvas");
 const smokectx = smokeCanvas.getContext("2d");
+const smoke2Canvas = document.getElementById("smoke2Canvas");
+const smoke2ctx = smoke2Canvas.getContext("2d");
 const generalCanvas = document.getElementById("generalCanvas");
 const generalctx = generalCanvas.getContext("2d");
 let particleArray = [];
@@ -203,6 +205,14 @@ function fpsLimit() {
     return false;
 }
 
+function clearSmokeCanvas() {
+    smoke2ctx.clearRect(0, 0, smoke2Canvas.width, smoke2Canvas.height);
+    smoke2ctx.globalAlpha = .9;
+    smoke2ctx.drawImage(smokeCanvas, 0, 0);
+    smokectx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+    smokectx.drawImage(smoke2Canvas, 0, 0);
+}
+
 function animate() {
     if (STOPANIMATION) {
         return;
@@ -217,6 +227,8 @@ function animate() {
         let width = window.innerWidth;
         smokeCanvas.height = height;
         smokeCanvas.width = width;
+        smoke2Canvas.height = height;
+        smoke2Canvas.width = width;
         generalCanvas.height = height;
         generalCanvas.width = width;
         for (let i = 0; i < sparklerArray.length; i++) {
@@ -225,8 +237,7 @@ function animate() {
             }
         }
     }
-    smokectx.fillStyle = "rgba(48, 48, 48, 0.1)";
-    smokectx.fillRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+    clearSmokeCanvas();
     generalctx.clearRect(0, 0, generalCanvas.width, generalCanvas.height);
     for (let i = 0; i < sparklerArray.length; i++) {
         sparklerArray[i].sparkle();
