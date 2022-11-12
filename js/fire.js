@@ -16,6 +16,7 @@ const colorPack = {  // [main], [smoke], [flame], "imageURL"
     "blue":   [[0, 0, 255, 1], [0, 0, 160, 0.5], [0, 0, 100, 0], "../img/flareBlue.png"]
 };
 let currentColor = "cyan", newColor;
+let maxFPS = 60, fpsInterval = 1000 / maxFPS, startTime, now, then = 0, elapsed;
 
 
 
@@ -192,7 +193,21 @@ function applyColorChange() {
     go();
 }
 
+function fpsLimit() {
+    now = Date.now();
+    elapsed = now - then;
+    if (elapsed > fpsInterval) {
+        then = now - (elapsed % fpsInterval);
+        return true;
+    }
+    return false;
+}
+
 function animate() {
+    if (!fpsLimit()) {
+        requestAnimationFrame(animate);
+        return;
+    }
     if (smokeCanvas.height !== window.innerHeight || smokeCanvas.width !== window.innerWidth) {
         particleArray.splice(0, particleArray.length);
         let height = window.innerHeight;
