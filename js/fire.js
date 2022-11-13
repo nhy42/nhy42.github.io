@@ -4,8 +4,7 @@ const smoke2Canvas = document.getElementById("smoke2Canvas");
 const smoke2ctx = smoke2Canvas.getContext("2d");
 const generalCanvas = document.getElementById("generalCanvas");
 const generalctx = generalCanvas.getContext("2d");
-let particleArray = [];
-let sparklerArray = [];
+let particleArray = [], sparklerArray = [], eraserArray = [];
 let RUNNING = false, STOPANIMATION = false;
 let dieTimeout, startTimeout = [];
 const colorPack = {  // [main], [smoke], [flame], "imageURL"
@@ -90,6 +89,7 @@ class Sparkler {
         this.y = y;
         this.type = type;
         this.centered = centered;
+        this.dead = false;
         switch (type) {
             case 1:
                 this.randThreshold = 0.4;
@@ -154,7 +154,39 @@ class Sparkler {
         this.x = x;
         this.y = y;
     }
+    die() {
+        this.dead = true;
+        if (this.type === 1) {
+            eraserArray.push(new Eraser(this.x - 275, this.y + 15, this.x + 275, 0, 200, smokectx));
+        }
+    }
+}
 
+class Eraser {
+    constructor(x1, y1, x2, y2, t, ctx) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.tMax = t;
+        this.ctx = ctx;
+        this.yStep = y2 - y1;
+        this.timeAlive = 0;
+        this.startCounter = 0;
+    }
+    erase() {
+        if (this.startCounter < 40) {
+            this.startCounter++;
+            return true;
+        }
+        this.timeAlive++;
+        if (this.timeAlive <= this.tMax) {
+            this.ctx.clearRect(this.x1, this.y1, this.x2 - this.x1, this.yStep * this.timeAlive / this.tMax);
+            return true;
+        } else {
+            this.ctx.clearRect(this.x1, this.y1, this.x2 - this.x1, this.yStep);
+            return false;
+        }
+    }
 }
 
 function colorfade(start, end, t, tmax) {
@@ -251,6 +283,12 @@ function animate() {
             i--;
         }
     }
+    for (let i = 0; i < eraserArray.length; i++) {
+        if (!eraserArray[i].erase()) {
+            eraserArray.splice(i, 1);
+            i--;
+        }
+    }
     requestAnimationFrame(animate);
 }
 
@@ -298,6 +336,9 @@ function die() {
     for (let i = startTimeout.length - 1; i >=0; i--) {
         clearTimeout(startTimeout[i]);
         startTimeout.splice(i, 1);
+    }
+    for (let i = 0; i < sparklerArray.length; i++) {
+        sparklerArray[i].die();
     }
     sparklerArray.splice(0, sparklerArray.length);
     RUNNING = false;
