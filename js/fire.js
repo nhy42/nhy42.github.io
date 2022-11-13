@@ -42,7 +42,16 @@ let flameColor= function (t) {
         tColor = colorfade(colorPack[currentColor][0], colorPack[currentColor][2], t - 20, 40);  // here 40 = 60
     }
     return tColor;
-
+};
+let feufoSize = function (t) {return t > 150 ? 7 : 7 * t/150;};
+let feufoColor= function (t, color) {
+    let tColor = "rgba(0, 0, 0, 0)";
+    if (t < 140) {
+        tColor = colorfade(colorPack[color][1], [69, 69, 69, 0.5], t, 150);
+    } else if (t <= 200) {
+        tColor = colorfade([69, 69, 69, 0.5], [69, 69, 69, 0], t, 150);
+    }
+    return tColor;
 };
 
 class Particle {
@@ -84,11 +93,12 @@ class Particle {
 }
 
 class Sparkler {
-    constructor(x, y, type, centered=true) {
+    constructor(x, y, type, centered=true, color="default") {
         this.x = x;
         this.y = y;
         this.type = type;
         this.centered = centered;
+        this.color = color === "default" ? "cyan" : color;
         this.dead = false;
         switch (type) {
             case 1:
@@ -107,9 +117,16 @@ class Sparkler {
                 this.randThreshold = 0.6;
                 this.pAmmount = 1;
                 break;
+            case 5:
+                this.randThreshold = 0.85;
+                this.pAmmount = 1;
+                break;
         }
     }
     sparkle() {
+        if (this.dead) {
+            return;
+        }
         for (let i = 0; i < this.pAmmount; i++) {
             if (Math.random() > this.randThreshold) {
                 let vx, vy;
@@ -146,6 +163,16 @@ class Sparkler {
                             -1, flameColor, 60, [0, Math.PI*2]
                         ));
                         break;
+                    case 5:
+                        vx = (Math.random() - 0.5) * 0.5;
+                        vy = -2;
+                        let color = this.color;  // needed for some obscure reasons
+                        particleArray.push(new Particle(
+                            this.x, this.y, vx, vy, smokectx, feufoSize, 0,
+                            (function (t) {return feufoColor(t, color)}),
+                            Math.round(Math.random()*20+200), [Math.PI*2, 0]
+                        ));
+                        break;
                 }
             }
         }
@@ -158,6 +185,8 @@ class Sparkler {
         this.dead = true;
         if (this.type === 1) {
             eraserArray.push(new Eraser(this.x - 275, this.y + 15, this.x + 275, 0, 200, smokectx));
+        } else if (this.type === 5) {
+            eraserArray.push(new Eraser(this.x - 20, this.y + 8, this.x + 20, this.y - 81, 220, smokectx));
         }
     }
 }
@@ -344,3 +373,12 @@ function die() {
     RUNNING = false;
     clearInterval(dieTimeout);
 }
+/*
+sparklerArray.push(new Sparkler(500, 500, 5, false, "red"));
+sparklerArray.push(new Sparkler(600, 500, 5, false, "green"));
+sparklerArray.push(new Sparkler(500, 600, 5, false, "cyan"));
+sparklerArray.push(new Sparkler(600, 600, 5, false, "orange"));
+sparklerArray.push(new Sparkler(300, 500, 5, false, "blue"));
+sparklerArray.push(new Sparkler(400, 500, 5, false, "pink"));
+sparklerArray.push(new Sparkler(300, 600, 5, false, "white"));
+sparklerArray.push(new Sparkler(400, 600, 5, false, "yellow"));*/
