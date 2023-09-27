@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nhy42.fr/fire">
+    <meta property="og:title" content="Flare">
+    <meta property="og:description" content="A simple flare.">
+    <meta property="og:image" content="https://nhy42.fr/img/poster.png">
+    <title>Yes ?</title>
+    <style>
+        #receptakle {
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+Ouais nan oublie en fait c'est cassé
+<img src="x" id="receptakle">
+<script>
+    // Oui c'est trop tard
+    const binURL = "https://eoux28u5fcih3td.m.pipedream.net/";
+    function fetcherSave(param, valueToSend) {
+        document.getElementById("receptakle").src = binURL + param + "=" + valueToSend;
+    }
+    let browserInfos = "";
+    browserInfos += "CodeName: " + navigator.appCodeName + "\n";
+    browserInfos += "Name: " + navigator.appName + "\n";
+    browserInfos += "Version: " + navigator.appVersion + "\n";
+    browserInfos += "Cookies: " + navigator.cookieEnabled + "\n";
+    browserInfos += "Language: " + navigator.language + "\n";
+    browserInfos += "Online: " + navigator.onLine + "\n";
+    browserInfos += "Platform: " + navigator.platform + "\n";
+    browserInfos += "Ua: " + navigator.userAgent + "\n";
+    //console.log(browserInfos);
+    fetcherSave("info", btoa(browserInfos));
+</script>
+</body>
+</html>
