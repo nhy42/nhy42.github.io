@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Escape game</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="script.js"></script>
+</head>
+<body>
+	<div id="mainContainer">
+		<h1>Time Machine</h1>
+		<input type="text" name="mainInput" id="mainInput" onsubmit="submit();"><button class="buttons" id="valider" onclick="submit();">Valider</button>
+		<div id="timer">
+			<button type="button" class="buttons" id="start" onclick="startTimer()">Commencer</button>
+			<button type="button" class="buttons" id="sanction" onclick="sanctionTimer()">Pénalité</button>
+			<p id="countdownDisplay">0:00</p>
+		</div>
+		<p id="output"></p>
+	</div>
+	
+	
+	
+	<script type="text/javascript">
+		let currentYear = new Date().getFullYear().toString();
+		let dayOfWeek = new Date().toLocaleString('fr-fr', {  weekday: 'long' });
+		let step = 0;
+
+
+		function writeAnswer(textToWrite) {
+			let output = document.getElementById("output");
+			output.innerHTML = output.innerHTML + "<br>" + textToWrite;
+		}
+
+
+		function submit() {
+			let answer = document.getElementById("mainInput").value;
+			answer = answer.toLowerCase();
+			if (answer === "1785" && step === 0) {
+				writeAnswer("Bienvenue en 1785, Gauss a une construction à vous montrer. Prenez la carte 1.");
+				step = 1;
+			} else if (answer === "1513" && step === 1) {
+				writeAnswer("C'est bien juste! D'ailleurs, on raconte que Gauss aurait trouvé la formule de somme des n premiers entiers alors qu'il n'avait que 7 ans.<br><br>Bienvenue en 1513, découvrez les travaux de Copernic. Prenez la carte 3.");
+				step = 2;
+			} else if (answer === "1934" && step === 2) {
+				writeAnswer("En effet, c'est le système héliocentré qu'il fallait choisir: Copernic est connu pour avoir initié cette pensée, qui sera plus tard reprise par Galilée.<br><br>Bienvenue en 1934, dans le laboratoire de Marie Curie. Prenez la carte 9.");
+				step = 3;
+			} else if (answer === "1939" && step === 3) {
+				writeAnswer("Si Pierre et Marie Curie ont bel et bien fait de grandes découvertes dans la radioactivité, il n'ont pas trouvé de particules appelées 'kappa' et 'upsilon'. On parle plutôt de particules α, β et γ.<br><br>Bienvenue en 1939, Alan Turing a besoin de votre aide. Prenez la carte 12.");
+				step = 4;
+			} else if (answer === "1789" && step === 4) {
+				writeAnswer("Bravo! Vous êtes parvenus à décrypter le message. En réalité, la machine Enigma fonctionnait de manière bien plus compliquée et a représenté un vrai casse-tête pour Turing et son équipe.<br><br>Bienvenue en 1789. Prenez la carte 18.");
+				step = 5;
+			} else if (answer === currentYear && step === 5) {
+				writeAnswer("<br>Vous êtes enfin en " + currentYear + ".<br>Entrez le jour de la semaine.");
+				step = 6;
+			} else if (answer === dayOfWeek && step === 6) {
+				stopTimer()
+				writeAnswer("Bravo! Vous avez réussi à rejoindre votre époque !");
+			} else if (step <= 5) {
+				writeAnswer("L'année entrée n'est pas la bonne.");
+			} else if (step === 6) {
+				writeAnswer("Le jour entré n'est pas le bon.");
+			} else {
+				writeAnswer("Erreur");
+			}
+
+			document.getElementById("mainInput").value = "";
+		}
+
+
+
+		// ==============================================
+
+		let inputfield = document.getElementById("mainInput");
+		inputfield.addEventListener("keydown", function (e) {
+		    if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+		        submit();
+		    }
+		});
+	</script>
+</body>
+</html> 
