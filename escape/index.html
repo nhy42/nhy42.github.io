@@ -47,17 +47,24 @@
 				writeAnswer("Si Pierre et Marie Curie ont bel et bien fait de grandes découvertes dans la radioactivité, il n'ont pas trouvé de particules appelées 'kappa' et 'upsilon'. On parle plutôt de particules α, β et γ.<br><br>Bienvenue en 1939, Alan Turing a besoin de votre aide. Prenez la carte 12.");
 				step = 4;
 			} else if (answer === "1789" && step === 4) {
-				writeAnswer("Bravo! Vous êtes parvenus à décrypter le message. En réalité, la machine Enigma fonctionnait de manière bien plus compliquée et a représenté un vrai casse-tête pour Turing et son équipe.<br><br>Bienvenue en 1789. Prenez la carte 18.");
+				writeAnswer("Bravo! Vous êtes parvenus à décrypter le message. En réalité, la machine Enigma fonctionnait de manière bien plus compliquée et a représenté un vrai casse-tête pour Turing et son équipe.<br><br>Bienvenue en 1789, chez Sophie Germain. Prenez la carte 18.");
 				step = 5;
-			} else if (answer === currentYear && step === 5) {
-				writeAnswer("<br>Vous êtes enfin en " + currentYear + ".<br>Entrez le jour de la semaine.");
+			} else if (answer === "71753" && step === 5) {
+				writeAnswer("Heureusement que Sophie Germain était là ! Lors de la Révolution, elle n'est âgée que de 13 ans, mais elle s'intéresse déjà à la lecture mathématique.<br><br>Finalement vous pouvez enfin utiliser la machine ! Il ne vous reste plus qu'à rentrer chez vous !");
 				step = 6;
-			} else if (answer === dayOfWeek && step === 6) {
+			} else if (answer === currentYear && step === 6) {
+				writeAnswer("<br>Vous êtes enfin en " + currentYear + ".<br>Entrez le jour de la semaine.");
+				step = 7;
+			} else if ((answer === dayOfWeek || answer===dayOfWeek+" ") && step === 7) {
 				stopTimer()
 				writeAnswer("Bravo! Vous avez réussi à rejoindre votre époque !");
-			} else if (step <= 5) {
+			} else if (step <= 4) {
 				writeAnswer("L'année entrée n'est pas la bonne.");
+			} else if (step === 5) {
+				writeAnswer("La valeur entrée n'est pas la bonne.");	
 			} else if (step === 6) {
+				writeAnswer("L'année entrée n'est pas la bonne.");	
+			} else if (step === 7) {
 				writeAnswer("Le jour entré n'est pas le bon.");
 			} else {
 				writeAnswer("Erreur");
