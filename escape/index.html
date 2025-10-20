@@ -38,16 +38,16 @@
 				writeAnswer("Bienvenue en 1785, Gauss a une construction à vous montrer. Prenez la carte 1.");
 				step = 1;
 			} else if (answer === "1513" && step === 1) {
-				writeAnswer("C'est bien juste! D'ailleurs, on raconte que Gauss aurait trouvé la formule de somme des n premiers entiers alors qu'il n'avait que 7 ans.<br><br>Bienvenue en 1513, découvrez les travaux de Copernic. Prenez la carte 3.");
+				writeAnswer("C'est bien juste! D'ailleurs on raconte que Gauss aurait trouvé la formule de somme des n premiers entiers alors qu'il n'avait que 7 ans.<br><br>Bienvenue en 1513, découvrez les travaux de Copernic. Prenez la carte 3.");
 				step = 2;
 			} else if (answer === "1934" && step === 2) {
-				writeAnswer("En effet, c'est le système héliocentré qu'il fallait choisir: Copernic est connu pour avoir initié cette pensée, qui sera plus tard reprise par Galilée.<br><br>Bienvenue en 1934, dans le laboratoire de Marie Curie. Prenez la carte 9.");
+				writeAnswer("En effet c'est le système héliocentré qu'il fallait choisir : Copernic est connu pour avoir initié cette pensée qui sera plus tard reprise par Galilée. Cependant la trajectoire d'un astre n'est pas circulaire mais elliptique.<br><br>Bienvenue en 1934, dans le laboratoire de Marie Curie. Prenez la carte 10.");
 				step = 3;
 			} else if (answer === "1939" && step === 3) {
-				writeAnswer("Si Pierre et Marie Curie ont bel et bien fait de grandes découvertes dans la radioactivité, il n'ont pas trouvé de particules appelées 'kappa' et 'upsilon'. On parle plutôt de particules α, β et γ.<br><br>Bienvenue en 1939, Alan Turing a besoin de votre aide. Prenez la carte 12.");
+				writeAnswer("Si Pierre et Marie Curie ont bel et bien fait de grandes découvertes dans la radioactivité, il n'ont pas trouvé de particules appelées 'kappa' et 'upsilon'. On parle plutôt de particules α, β et γ.<br><br>Bienvenue en 1939, Alan Turing a besoin de votre aide. Prenez la carte 13.");
 				step = 4;
 			} else if (answer === "1789" && step === 4) {
-				writeAnswer("Bravo! Vous êtes parvenus à décrypter le message. En réalité, la machine Enigma fonctionnait de manière bien plus compliquée et a représenté un vrai casse-tête pour Turing et son équipe.<br><br>Bienvenue en 1789, chez Sophie Germain. Prenez la carte 18.");
+				writeAnswer("Bravo! Vous êtes parvenus à décrypter le message. En réalité, la machine Enigma fonctionnait de manière bien plus compliquée et a représenté un vrai casse-tête pour Turing et son équipe.<br><br>Bienvenue en 1789 chez Sophie Germain. Prenez la carte 19.");
 				step = 5;
 			} else if (answer === "71753" && step === 5) {
 				writeAnswer("Heureusement que Sophie Germain était là ! Lors de la Révolution, elle n'est âgée que de 13 ans, mais elle s'intéresse déjà à la lecture mathématique.<br><br>Finalement vous pouvez enfin utiliser la machine ! Il ne vous reste plus qu'à rentrer chez vous !");
@@ -75,11 +75,10 @@
 
 
 
-		// ==============================================
 
 		let inputfield = document.getElementById("mainInput");
 		inputfield.addEventListener("keydown", function (e) {
-		    if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+		    if (e.code === "Enter") {
 		        submit();
 		    }
 		});

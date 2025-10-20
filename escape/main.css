@@ -1,11 +1,15 @@
 body {
 	background-color: rgb(32, 33, 36);
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+	font-family: 'Lucida Sans';
 }
 
+@font-face {
+  font-family: 'MelonHoney';
+  src: url('MelonHoney.ttf') format('truetype');
+}
 h1 {
 	color: rgb(77, 77, 165);
-	font-family: 'Copperplate'; 
+	font-family: 'MelonHoney'; 
 	font-size: 50px;
 }
 

@@ -19,7 +19,7 @@ function startTimer() {
     if (timeRemaining <= 0) {
       clearInterval(timerInterval);
 
-      alert("Temps écoulé!");
+      alert("Temps écoulé !");
     }
   }, 1000);
 }
